@@ -1,0 +1,25 @@
+# Ignore Python internal files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Ignore local environments (Docker will install its own via requirements.txt)
+venv/
+.venv/
+env/
+.env
+
+# Ignore local data stores (Prevent uploading your local test PDFs)
+faiss_index/
+temp_pdfs/
+uploads/
+
+# Ignore Git and metadata
+.git
+.gitignore
+.DS_Store
+
+# Ignore documentation and tests to keep the image slim
+docs/
+tests/
+README.md
