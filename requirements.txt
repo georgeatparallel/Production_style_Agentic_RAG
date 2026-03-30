@@ -1,3 +1,12 @@
+# --- 1. THE CRITICAL SLIM-DOWN LINE ---
+--extra-index-url https://download.pytorch.org/whl/cpu
+
+# --- 2. AI CORE (FORCE CPU VERSIONS) ---
+torch
+sentence-transformers
+faiss-cpu
+
+
 # Web Framework
 fastapi
 uvicorn
