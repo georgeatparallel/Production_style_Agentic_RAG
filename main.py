@@ -45,7 +45,15 @@ llm_endpoint = HuggingFaceEndpoint(
     task="conversational"
 )
 llm = ChatHuggingFace(llm=llm_endpoint)
-search_tool = DuckDuckGoSearchRun()
+if config.WEB_SEARCH_PROVIDER == "parallel":
+    from parallel_search import ParallelSearchRun
+    search_tool = ParallelSearchRun()
+    search_source = "Parallel"
+elif config.WEB_SEARCH_PROVIDER == "duckduckgo":
+    search_tool = DuckDuckGoSearchRun()
+    search_source = "DuckDuckGo"
+else:
+    raise ValueError("WEB_SEARCH_PROVIDER must be 'duckduckgo' or 'parallel'.")
 
 # ==========================================
 # Agent Logic (The Brain)
@@ -86,10 +94,13 @@ def vector_store_node(state: AgentState):
 def web_search_node(state: AgentState):
     """Fetches real-time data from March 2026."""
     try:
-        # We explicitly search for 2026 to help the LLM bypass its training cutoff
-        search_query = f"{state['question']} current price March 2026"
+        # Preserve DuckDuckGo's existing query; Parallel receives the original question.
+        search_query = (
+            state["question"] if config.WEB_SEARCH_PROVIDER == "parallel"
+            else f"{state['question']} current price March 2026"
+        )
         res = search_tool.run(search_query)
-        return {"context": [f"REAL-TIME WEB DATA (2026): {res}"], "sources": ["DuckDuckGo"], "next_step": "generate"}
+        return {"context": [f"REAL-TIME WEB DATA (2026): {res}"], "sources": [search_source], "next_step": "generate"}
     except:
         return {"context": ["Search currently unavailable."], "sources": [], "next_step": "generate"}
 

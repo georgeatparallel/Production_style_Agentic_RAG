@@ -1,0 +1,2 @@
+# Optional web-search provider; install after the application's requirements.txt.
+mcp>=1.26,<2

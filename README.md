@@ -77,6 +77,9 @@ project/
 
 ## 🚀 Installation & Setup
 
+For optional free web search through Parallel Search MCP, see
+[Parallel provider setup](docs/parallel-search.md). DuckDuckGo remains the default.
+
 ### 1. Clone the Repository
 
 ```bash

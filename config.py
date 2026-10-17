@@ -10,6 +10,9 @@ load_dotenv()
 # Ensure your Railway Variable matches "HUGGINGFACEHUB_API_TOKEN"
 HF_TOKEN = os.getenv("HUGGINGFACEHUB_API_TOKEN")
 
+# Explicit opt-in; existing deployments continue to use DuckDuckGo.
+WEB_SEARCH_PROVIDER = os.getenv("WEB_SEARCH_PROVIDER", "duckduckgo").strip().lower()
+
 # Railway assigns a dynamic PORT; default to 8000 for local testing
 PORT = int(os.getenv("PORT", 8000))
 
